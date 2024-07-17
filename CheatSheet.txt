@@ -1,0 +1,139 @@
+//reserved Keyword
+$
+
+//show all Databases:
+show dbs
+
+//show all collection
+show collection
+
+//create Database
+use employee
+
+//create collection in db:
+db.Collection_name
+
+//switched to checkout:
+use db_name
+
+//show standing database name:
+db
+
+//insert one doc:
+db.Collection_name.insertOne({name:"Ram",age:19})
+
+//show all doc of collection:
+db.Collection_name.find()
+
+//update or create nested field in one doc:
+db.Collection_name.updateOne({name:"Ram"},{$set:{idcards:{hasPan:false,hasAdhar:true}}})
+
+//find one doc:
+db.Collection_name.findOne({name:"Ram"})
+
+//update or create nested field in All doc:
+db.Collection_name.updateMany({},{$set:{Hobiies:["Anime","Cooking"]}})
+
+//find nested field doc
+db.Collection_name.find({Hobiies:"Anime"})
+
+//search nested doc
+db.Collection_name.find({"idcards.hasAdhar":true})
+
+//Create operation
+insertOne()
+insertMany()
+
+//Read operation
+find()
+findOne()
+
+//update operation
+updateOne()
+updateMany()
+replaceOne()
+
+//Delete operation
+deleteOne()
+deleteMany()
+
+//find all students with age less than 12 
+db.Collection_name.find({age:{$lt:12}})
+
+//find all students with age 12 or less
+db.Collection_name.find({age:{$lte:12}})
+
+//find all students with age greater than 12 
+db.Collection_name.find({age:{$gt:12}})
+
+//find all students with age 12 or greater
+db.Collection_name.find({age:{$gte:12}})
+
+//find students between 5 to 12
+db.Collection_name.find({age:{$gt:5,$lt:12}})
+
+//search all doc records in collection
+db.Collection_name.find().toArray()
+
+//Insert one doc in collection.
+db.Collection_name.insert({name:"RAM",age:12})
+
+//Insert One doc in collection.
+db.Collection_name.insertOne({name:"Om",age:20})
+
+//Insert Many doc in collection.
+db.Collection_name.insertMany([{name:"shyam",age:15},{name:"guru",age:90}])
+
+//update/set new value or insert new value.
+db.Collection_name.updateOne({age:15},{$set:{age:25}})
+
+//update/set new value or insert new section in doc. 
+db.Collection_name.updateMany({age:{$lte:17}},{$set:{isEligible:true}})
+
+//delete many doc.
+db.Collection_name.deleteMany({age:15})
+
+//delete one doc.
+db.Collection_name.deleteOne({name:"Ramu"})
+
+//delete all doc.
+db.Collection_name.deleteMany({})
+ 
+//find Only name between name and id of collection
+db.Collection_name.find({},{name:1})
+
+//find Only name and not _id of collection.
+db.Collection_name.find({},{name:1,_id:0})
+
+//DataType
+db.Collection_name.insertOne({name:"TCS",isFunded:true,Funding:1200000,employee:[{name:"OM",age:12}],date:new Date(),Time:new Timestamp()})
+"TCS" - text;
+true - boolean;
+12000000 - number (64 bit,32 bit,decimal);
+array - employee;
+Embeded nested doc;
+time - Time;
+Date - Date;
+
+//Delete Database
+db.dropDatabase()
+
+//delete One collection
+db.Collection_name.drop()
+
+//insert Many doc in collections
+db.Collection_name.insertMany([{name:"A",price:1},{name:"B",price:2},{name:"C",price:3}])
+
+//insert Many doc in collections with diff _id
+db.Collection_name.insertMany([{_id:"A",name:"A",price:1},{_id:"B",name:"B",price:2},{_id:"C",name:"C",price:3}])
+
+//insert doc using options when one doc _id is already exist in collections
+db.Collection_name.insertMany([{_id:"AA",name:"AA",price:11},{_id:"A",name:"A",price:22},{name:"GG",price:33}],{ordered:false})
+
+//set _id and use of options
+db.Collection_name.insertMany([_id:"A",name:"A"],{ordered:false})
+
+//to create collection without inserting doc
+db.createCollection("Collection_name")
+
+
