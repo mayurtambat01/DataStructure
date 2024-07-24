@@ -136,4 +136,6 @@ db.Collection_name.insertMany([_id:"A",name:"A"],{ordered:false})
 //to create collection without inserting doc
 db.createCollection("Collection_name")
 
+//Write Concern Specification
+db.Collection_name.insertOne({name:"A",price:1},{writeConcern:{w:0,j:false,wtimeout:0}})
 
