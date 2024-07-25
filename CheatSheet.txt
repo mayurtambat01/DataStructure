@@ -150,3 +150,42 @@ Copy File Path then open cmd Type Following Line.
 (7) then Print Enter Keyword. 
 (8) Open Mongosh. 
 (9) The Data Has Been Stored in Selected Database and Collections.
+
+//Comparison Operators.
+(1) $eq - Equal
+db.Collection_name.find({doc_name:{$eq:Filter}}) -
+- $eq Operator Find all Doc that Equal to the Given Filter.
+
+(2) $ne - Not Equal
+db.Collection_name.find({doc_name:{$ne:Filter}}) -
+- $ne Operator Find all Doc that not Equal to the Given Filter. 
+
+(3) $gt - Greater than
+db.Collection_name.find({doc_name:{$gt:Filter}}) -
+- $gt Operator Find all Doc that is Greater than to the Given Filter.
+
+(4) $gte - Greater than Equal to
+db.Collection_name.find({doc_name:{$gte:Filter}}) -
+- $gte Operator Find all Doc that is Greater than Equal to the Given Filter.
+
+(5) $lt - Less than
+db.Collection_name.find({doc_name:{$lt:Filter}}) -
+- $lt Operator Find all Doc that is Less Than to the Given  Filter.
+
+(6) $lte - Less than Equal to
+db.Collection_name.find({doc_name:{$lte:Filter}}) -
+- $lte Operator Find all Doc that is Less Than Equal to the Given Filter.
+
+(7) $in - in
+db.Collection_name.find({doc_name:{$in:[Filter,Filter]}}) -
+- $in Operator Find all Doc that is Equal to Given Filter in List.
+
+(8) $nin - Not in
+db.Collection_name.find({doc_name:{$nin:[Filter,Filter]}}) -
+- $nin Operator Find all Doc that is Not Equal too Given Filter in List.
+
+//Find doc.
+db.Collection_name.find({doc_name:"Filter name"})
+
+//Find nested Doc.
+db.Collection_name.find({"doc_name.nested_doc_name":Filter})
