@@ -189,3 +189,20 @@ db.Collection_name.find({doc_name:"Filter name"})
 
 //Find nested Doc.
 db.Collection_name.find({"doc_name.nested_doc_name":Filter})
+
+//Logical Operator -
+(1) $or - 
+db.Collection_name.find({$or:[ {doc_name:{$gte:Filter}}, {doc_name:{$lte:Filter}} ]})
+
+(2) $nor - 
+db.Collection_name.find({$nor:[ {doc_name:{$gte:Filter}}, {doc_name:{$lte:Filter}} ]})
+
+(3) $and -
+db.Collection_name.find({$and:[ {doc_name:{$lte:Filter}} ,{doc_name:{doc_name:Filter}} ]})
+
+//Element Queary Operator -
+(1) $exist - the doc exist or not in collections.
+db.Collection_name.find({doc_name:{$exist: true}})
+
+(2) $type - Which type of the doc in collections. (ex. "String","boolean")
+db.Collection_name.find({doc_name:{$type: 8}})   //8 means boolean in numbers.
