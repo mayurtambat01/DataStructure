@@ -206,3 +206,35 @@ db.Collection_name.find({doc_name:{$exist: true}})
 
 (2) $type - Which type of the doc in collections. (ex. "String","boolean")
 db.Collection_name.find({doc_name:{$type: 8}})   //8 means boolean in numbers.
+
+//Evaluation Operators -
+(1) $expr -  Allows use of Aggregation Expression Within the Queary Language.
+
+db.Collection_name.find({
+    $expr:{
+        $gt: ["$field","$field2"]
+    }
+})
+
+db.Collection_name.find({
+    $expr:{
+        $gt: ["$price", {$avg: "$price"}]
+    }
+})
+
+(2) $regex - Select Values Where Documents Match a Specific Regular Expression.
+
+db.Collection_name.find({doc_name: {$regex: /^A/}})    //find all doc that name start with 'A'.
+
+(3) $text - Performs text search.
+ 
+createIndex - 
+db.Collection_name.createIndex({doc_name: "text"})
+
+db.Collection_name.find({$text: {$search: "Filter"}})
+
+(4) $mod - Performs a Modulo operation on the value of a field and Selects Documents with a Specific results.
+
+db.Collection_name.find({doc_name:{$mod:[2,0]}})
+
+
