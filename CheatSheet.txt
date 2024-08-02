@@ -235,6 +235,26 @@ db.Collection_name.find({$text: {$search: "Filter"}})
 
 (4) $mod - Performs a Modulo operation on the value of a field and Selects Documents with a Specific results.
 
-db.Collection_name.find({doc_name:{$mod:[2,0]}})
+db.Collection_name.find({doc_name:{$mod:[2,0]}})   //.find({age:{$mod:[2,0]}})  for even Age 
+db.Collection_name.find({doc_name:{$mod:[2,1]}})   //.find({age:{$mod:[2,1]}})  for odd Age 
+
+//Find Document in Json Array String.
+db.Collection_name.find({doc_name:"Filter"})   //doc_name:Hobbies,Filter:"Reading".
+
+//Find Nested Doc (Array of Objects).
+db.Collection_name.find({"doc_name.nested_doc_name" : "Fileter"})    //.find({"experience.company":"Amazone"})
+
+//Find How Many Students in nested doc.
+db.Collection_name.find({"doc_name.nested_doc_name" : "Filter"}).count()    //.find({"experience.company":"Amazone"}).count()
+
+//Find How many Students Work in 3 Companys.
+db.Collection_name.find({doc_name : {$size : 3}})        //.find({experience : {$size :3}})
+
+//Find How Many Students Hobbies are Wlaking And Reading.
+db.Collection_name.find({Hobbies :{$all:["Walking","Reading"]}})       //Using of $all Operator it find all doc that filter alternate.
+
+//Find Doc that have atleast a product that name is apple and quantity is 15.
+db.Collection_name.find({products:{$elemMatch : {name:"apple", quantity:{$gte:15}}}})
+
 
 
