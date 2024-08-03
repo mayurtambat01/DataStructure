@@ -256,5 +256,14 @@ db.Collection_name.find({Hobbies :{$all:["Walking","Reading"]}})       //Using o
 //Find Doc that have atleast a product that name is apple and quantity is 15.
 db.Collection_name.find({products:{$elemMatch : {name:"apple", quantity:{$gte:15}}}})
 
+//Sort Documents  -  1 for Accending, -1 for Deccending.
+db.Collection_name.find().sort({doc_name : 1})    //.sort({age : 1})
+
+db.Collection_name.find().sort({doc_name : -1})    //.sort({age : -1})
+
+db.Collection_name.find().sort({doc_name : 1}).skip(2)    //skip first 2 doc.
+
+db.Collection_name.find().sort({doc_name : -1}).limit(2)     //Find Only 2 Document.
+
 
 
