@@ -265,5 +265,25 @@ db.Collection_name.find().sort({doc_name : 1}).skip(2)    //skip first 2 doc.
 
 db.Collection_name.find().sort({doc_name : -1}).limit(2)     //Find Only 2 Document.
 
+//Increase age by 2 of All Students.
+db.Collection_name.updateMany({},{$inc:{age:2}})      //$inc - Operator
+
+//Set Sita age for 50 if her age is minimum that it.
+db.Collection_name.updateOne({name:"SITA"},{$max:{age:50}})        //$max - maximum.
+
+//Set Sita age for 20 if her age is maximum that it.
+db.Collection_name.updateOne({name:"SITA"},{$min:{age:20}})       //$min - minimum.
+
+//Double the age of sita.
+db.Collection_name.updateOne({name:"SITA"},{$mul:{age:2}})    //$mul - multiplication.
+
+//for Removing doc age.
+db.Collection_name.updateMany({$unset:{age:23473}})      //$unset - unset(Remove).
+
+//For Changing the doc name.
+db.Collection_name.updateMany({},{$rename:{age:"StudentAge"}})    //$rename - Rename.
+
+//Insert Value or doc When they are not in Collections.
+db.Collection_name.updateOne({name:"GOLU"},{$set:{age:100}},{upsert:true})
 
 
