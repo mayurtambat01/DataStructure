@@ -286,4 +286,17 @@ db.Collection_name.updateMany({},{$rename:{age:"StudentAge"}})    //$rename - Re
 //Insert Value or doc When they are not in Collections.
 db.Collection_name.updateOne({name:"GOLU"},{$set:{age:100}},{upsert:true})
 
+//Add neglect : 1 where students experience is below 1.
+db.Collection_name.updateMany({experience:{$elemMatch:{$lte:1}}},{$set:{"experience.$.neglect": 1}})
 
+//Add experience.
+db.Collection_name.updateOne({name:"Ram"},{$push:{experience:{company:"Meta",duration:2.5}}})
+
+//Add experience if already added then dont.
+db.Collection_name.updateOne({name:"Ram"},{$addtoset:{experience:{company:"Meta",duration:2.5}}})
+
+//Remove latest Last doc.
+db.Collection_name.updateOne({name:"RAM"},{$pop:{experience:1}})
+
+//Remove First doc.
+db.Collection_name.updateOne({name:"RAM"},{$pop:{experience:-1}})
