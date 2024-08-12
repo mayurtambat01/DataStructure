@@ -300,3 +300,43 @@ db.Collection_name.updateOne({name:"RAM"},{$pop:{experience:1}})
 
 //Remove First doc.
 db.Collection_name.updateOne({name:"RAM"},{$pop:{experience:-1}})
+
+//Explain All the Query with Collection Scan, Filter, Direction.
+db.data.find({age:{$lte:30}}).explain()
+
+db.data.find({age:{$lte:30}}).explain("executionStats")
+
+Type of Indexes in MongoDB.
+(1) Single Field Indexes.
+(2) Compound Indexes.
+(3) Text Indexes.
+
+(1) Single Field Indexes - 
+//Create Index For age Filed.
+db.data.createIndex({"age":1})        //for Accending (1).
+db.data.createIndex({"age":-1})        //for Decending (-1).
+
+//For Scan or See Get Index.
+db.data.getIndexes()
+
+//For Delete Index.
+db.data.dropIndex("age_1")
+
+(2) Compound Indexes -
+db.data.createIndex({"age":1,"gender":1})  
+
+//For Scan or See Get Index.
+db.data.find({age:{$gte:30},gender:"male"}).explain("executionStats")
+                               or
+db.data.find({age:{$gte:30}}).explain("executionStats") 
+
+//No Two Doc Have Same Name.
+db.data.createIndex({"age":1}, {unique:true})
+
+//For searching doc line by one Word.
+db.data.createIndex({bio:"text"})
+db.data.find({$text:{$search:"savage"}})
+
+//For Scoring Doc.
+db.data.find({$text:{$search:"savage"}},{hamaraScore:{$meta:"textScore"}})
+
