@@ -340,3 +340,32 @@ db.data.find({$text:{$search:"savage"}})
 //For Scoring Doc.
 db.data.find({$text:{$search:"savage"}},{hamaraScore:{$meta:"textScore"}})
 
+Aggregate Guide:
+
+//Search All Female Teachers.
+db.teachers.aggregate( [ { $match: {gender:"female"} } ] )         //Find All (Gender:"Female") Doc. 
+
+//Search All Male Teachers.
+db.teachers.aggregate( [ { $match: {gender:"male"} } ] )         //Find All (Gender:"male") Doc. 
+
+//Group Teachers by Age.
+db.teachers.aggregate( [ { $group: { _id: "$age " } } ] )          //Each Doc have Separate Group.
+
+//Group teachers by age and show all teachers names per age group.
+db.teachers.aggregate( [ { $group: { _id: "$age" , name: { $push: "$name" } } } ] )       
+
+//Show all Doc That Separated By Group.
+db.teachers.aggregate( [ { $group: { _id: "$age" , pooraDoc: { $push: "$$ROOT" }}} ]  )
+
+//Give a Count per age of male Teachers.
+db.teachers.aggregate( [ { $match: { gender: "male" } },{ $group: { _id: "$age", count: { $sum:1 } }} ] )
+
+//Give a count per age of male Teachers and sort them by count in desc order.
+db.teachers.aggregate( [ { $match: { gender: "male" } },{ $group: { _id: "$age" ,count: { $sum:1 } } } ] ).sort( { count:-1 } )
+
+//Find Hobbies Per Age group.
+db.teachers.aggregate( [ { unwind: "$Hobbies" },{ $group: { _id: "$Hobbies" } } ] )
+
+//Find Average age of all Doc.
+db.teachers.aggregate( [ { $group: { _id:null , average: { $avg: "$age" } } } ] ) 
+
