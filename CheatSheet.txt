@@ -369,3 +369,18 @@ db.teachers.aggregate( [ { unwind: "$Hobbies" },{ $group: { _id: "$Hobbies" } } 
 //Find Average age of all Doc.
 db.teachers.aggregate( [ { $group: { _id:null , average: { $avg: "$age" } } } ] ) 
 
+// $buckets  -
+
+//Categories Male teachers based on their ages into three buckets.
+        //age less than 30.
+        //age between 31 to 40.
+        //age greater than 40.
+db.teachers.aggregate([{$match:{gender:"male"}},{$bucket:{groupBy:"$age",boundaries:[30,35,40],default:"Greater than 40",output:{count:{$sum:1}}}}])
+
+//Categories Male teachers based on their ages into three buckets.
+        //age less than 30.
+        //age between 31 to 40.
+        //age greater than 40.  
+        Also Show their names.
+db.teachers.aggregate([{$match:{gender:"male"}},{$bucket:{groupBy:"$age",boundaries:[30,35,40],default:"Greater Than 40",output:{count:{$sum:1},names:{$push:"$name"}}}}])
+

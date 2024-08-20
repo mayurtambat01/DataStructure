@@ -1,0 +1,22 @@
+[
+    {
+        "$match":{
+            "gender":"$male"}
+    },
+        {
+            "$bucket":{
+                "groupBy":"$age",
+                "boundaries":[0,10,20],
+                "default":"Greater Than 20",
+                "output":{
+                    "count":{
+                        "$sum":1
+                    },
+                    "names":{
+                        "$push":"$name"
+                    }
+                }
+            }
+        }
+]
+
