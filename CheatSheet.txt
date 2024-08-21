@@ -325,62 +325,71 @@ db.data.dropIndex("age_1")
 (2) Compound Indexes -
 db.data.createIndex({"age":1,"gender":1})  
 
-//For Scan or See Get Index.
+For Scan or See Get Index.
 db.data.find({age:{$gte:30},gender:"male"}).explain("executionStats")
                                or
 db.data.find({age:{$gte:30}}).explain("executionStats") 
 
-//No Two Doc Have Same Name.
+No Two Doc Have Same Name.
 db.data.createIndex({"age":1}, {unique:true})
 
-//For searching doc line by one Word.
+For searching doc line by one Word.
 db.data.createIndex({bio:"text"})
 db.data.find({$text:{$search:"savage"}})
 
-//For Scoring Doc.
+For Scoring Doc.
 db.data.find({$text:{$search:"savage"}},{hamaraScore:{$meta:"textScore"}})
 
 Aggregate Guide:
 
-//Search All Female Teachers.
+Search All Female Teachers.
 db.teachers.aggregate( [ { $match: {gender:"female"} } ] )         //Find All (Gender:"Female") Doc. 
 
-//Search All Male Teachers.
+Search All Male Teachers.
 db.teachers.aggregate( [ { $match: {gender:"male"} } ] )         //Find All (Gender:"male") Doc. 
 
-//Group Teachers by Age.
+Group Teachers by Age.
 db.teachers.aggregate( [ { $group: { _id: "$age " } } ] )          //Each Doc have Separate Group.
 
-//Group teachers by age and show all teachers names per age group.
+Group teachers by age and show all teachers names per age group.
 db.teachers.aggregate( [ { $group: { _id: "$age" , name: { $push: "$name" } } } ] )       
 
-//Show all Doc That Separated By Group.
+Show all Doc That Separated By Group.
 db.teachers.aggregate( [ { $group: { _id: "$age" , pooraDoc: { $push: "$$ROOT" }}} ]  )
 
-//Give a Count per age of male Teachers.
+Give a Count per age of male Teachers.
 db.teachers.aggregate( [ { $match: { gender: "male" } },{ $group: { _id: "$age", count: { $sum:1 } }} ] )
 
-//Give a count per age of male Teachers and sort them by count in desc order.
+Give a count per age of male Teachers and sort them by count in desc order.
 db.teachers.aggregate( [ { $match: { gender: "male" } },{ $group: { _id: "$age" ,count: { $sum:1 } } } ] ).sort( { count:-1 } )
 
-//Find Hobbies Per Age group.
+Find Hobbies Per Age group.
 db.teachers.aggregate( [ { unwind: "$Hobbies" },{ $group: { _id: "$Hobbies" } } ] )
 
-//Find Average age of all Doc.
+Find Average age of all Doc.
 db.teachers.aggregate( [ { $group: { _id:null , average: { $avg: "$age" } } } ] ) 
 
-// $buckets  -
+// $bucket Operator  -
+
+Categories Male teachers based on their ages into three buckets.
+        age less than 30.
+        age between 31 to 40.
+        age greater than 40.
+db.teachers.aggregate( [ { $match: { gender: "male" } }, { $bucket: {groupBy: "$age", boundaries: [30,35,40], default: "Greater than 40", output: { count: { $sum:1 } } } } ] )
 
 //Categories Male teachers based on their ages into three buckets.
-        //age less than 30.
-        //age between 31 to 40.
-        //age greater than 40.
-db.teachers.aggregate([{$match:{gender:"male"}},{$bucket:{groupBy:"$age",boundaries:[30,35,40],default:"Greater than 40",output:{count:{$sum:1}}}}])
-
-//Categories Male teachers based on their ages into three buckets.
-        //age less than 30.
-        //age between 31 to 40.
-        //age greater than 40.  
+        age less than 30.
+        age between 31 to 40.
+        age greater than 40.  
         Also Show their names.
-db.teachers.aggregate([{$match:{gender:"male"}},{$bucket:{groupBy:"$age",boundaries:[30,35,40],default:"Greater Than 40",output:{count:{$sum:1},names:{$push:"$name"}}}}])
+db.teachers.aggregate( [ { $match: { gender: "male" } }, { $bucket: {groupBy: "$age", boundaries: [30,35,40], default: "Greater Than 40", output: { count: { $sum:1 }, names: {$push: "$name" } } } } ] )
+
+//$lookup Operater (Use for Joins).
+The lookup is an aggregation pipeline stage that allows you to Perform a left outer join between two collections.
+
+Left Outer Join 
+db.order.aggregate( [ { $lookup: { from: "cust" ,localField: "_id", foreignField: "customer_id", as: "orderDeatils" } } ] )
+
+Right Outer Join
+db.cust.aggregate( [ { $lookup: { from: "order" ,localField: "customer_id", foreignField: "_id", as: "OrderDetails" } } ] )
 
