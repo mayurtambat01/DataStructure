@@ -1,0 +1,8 @@
+[
+    {
+        "$project":{
+            "Doc_Name":1,
+            "Doc_Names":0
+        }
+    }
+]

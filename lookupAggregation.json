@@ -1,0 +1,10 @@
+[
+    {
+        "$lookup":{
+            "from":"Collection Name to join",
+            "localField":"Doc Name of Current Collection",
+            "foreignField":"Doc Name of foreign Collection",
+            "as":"New Doc Name"
+        }
+    }
+]

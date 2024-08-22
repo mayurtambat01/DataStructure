@@ -1,3 +1,4 @@
+
 [
     {
         "$match":{
@@ -5,7 +6,7 @@
     },
         {
             "$bucket":{
-                "groupBy":"$age",
+                "groupBy":"$age,'Doc Name To groupBy'",
                 "boundaries":[0,10,20],
                 "default":"Greater Than 20",
                 "output":{

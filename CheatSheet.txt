@@ -393,3 +393,18 @@ db.order.aggregate( [ { $lookup: { from: "cust" ,localField: "_id", foreignField
 Right Outer Join
 db.cust.aggregate( [ { $lookup: { from: "order" ,localField: "customer_id", foreignField: "_id", as: "OrderDetails" } } ] )
 
+// $project Opretaor - 
+Show Only FirstName And Id Doc.
+db.emp.aggregate( [ { $project: { FirstName:1 }} ] )      
+
+Show Only FirstName.
+db.emp.aggregate( [ { $project: { FirstName:1 , _id: 0} } ] )    
+
+Show all Except LastName.
+db.emp.aggregate( [ { $project: { LastName:0 } } ] )     
+
+Rename The Doc For "Department" into "Dept".
+db.emp.aggregate( [ { $project: { _id:0 , Dept:"$Department" } } ] )     
+
+Show Annnual Salary Based On Monthly Salary ALso Show FirstName and LastName.
+db.emp.aggregate( [ { $project: { _id:0 , FirstName:1 , LastName:1 , monthlySalary:"$Salary" , annualSalary: { $multiply : [12,"$Salary"] } } } ] )
