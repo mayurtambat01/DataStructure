@@ -408,3 +408,7 @@ db.emp.aggregate( [ { $project: { _id:0 , Dept:"$Department" } } ] )
 
 Show Annnual Salary Based On Monthly Salary ALso Show FirstName and LastName.
 db.emp.aggregate( [ { $project: { _id:0 , FirstName:1 , LastName:1 , monthlySalary:"$Salary" , annualSalary: { $multiply : [12,"$Salary"] } } } ] )
+
+//capped Collection  -
+
+db.createCollection( "order_logs" , { capped:true , max:4 , size:100000 } )
